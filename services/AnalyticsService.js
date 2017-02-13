@@ -27,15 +27,16 @@ appManagerMSF.factory("AnalyticsService", ['$q', '$interval', 'AnalyticsEngine',
      * @param orgunit - Orgunit object or array of orgunits. Orgunit = { "id": "jalskdfjfas", ...}
      * @param period - Period = { "id": "LAST_6_MONTHS", ... }
      * @param filters - Filters = { "filterid": {"id": "optionid",...}, ... {"adsfjdsfjk": {"id": "sdflkasdfj",...}}
+     * @param relativePeriodDate - Date to make analytics relative to.
      * @returns {*|n} - Result of analytics endpoint
      */
-    var queryAvailableData = function(orgunit, period, filters){
-        var analyticsParameters = buildAnalyticsParameters(orgunit, period, filters);
+    var queryAvailableData = function(orgunit, period, filters, relativePeriodDate){
+        var analyticsParameters = buildAnalyticsParameters(orgunit, period, filters, relativePeriodDate);
 
         return AnalyticsEngine.get(analyticsParameters).$promise;
     };
 
-    var buildAnalyticsParameters = function(orgunit, period, filters){
+    var buildAnalyticsParameters = function(orgunit, period, filters, relativePeriodDate){
         var parameters = {};
 
         var orgunits = "";
@@ -54,6 +55,10 @@ appManagerMSF.factory("AnalyticsService", ['$q', '$interval', 'AnalyticsEngine',
         parameters.aggregationType = "COUNT";
         parameters.hierarchyMeta = "TRUE";
         parameters.displayProperty = "NAME";
+    
+        if (relativePeriodDate != undefined) {
+            parameters.relativePeriodDate = relativePeriodDate;
+        }
 
         if(filters !== null){
             var filterArray = [];

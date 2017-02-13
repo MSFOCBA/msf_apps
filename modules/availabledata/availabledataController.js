@@ -22,6 +22,9 @@ appManagerMSF.controller('availabledataController', ["$scope", "$q", "$http", "$
 	function($scope, $q, $http, $parse, commonvariable, Organisationunit,
 			 OrganisationUnitGroupSet, OrgunitGroupSetService, UserService, DataStoreService, AnalyticsService) {
 
+		// Optional parameter. It can be left empty.
+		var relativePeriodDate = "2016-01-01";
+
 		$scope.availableDataStatus = {
 			visible: false,
 			type: "info",
@@ -84,8 +87,10 @@ appManagerMSF.controller('availabledataController', ["$scope", "$q", "$http", "$
 				var k = dataViewOrgUnits.length;
 				var currentOu = 0;
 				angular.forEach(dataViewOrgUnits, function(dataViewOrgUnit){
-					var parentPromise = AnalyticsService.queryAvailableData(dataViewOrgUnit, $scope.selectedPeriod, selectedFilters);
-					var childrenPromise = AnalyticsService.queryAvailableData(dataViewOrgUnit.children, $scope.selectedPeriod, selectedFilters);
+					var parentPromise = AnalyticsService.queryAvailableData(dataViewOrgUnit, $scope.selectedPeriod,
+						selectedFilters, relativePeriodDate);
+					var childrenPromise = AnalyticsService.queryAvailableData(dataViewOrgUnit.children, $scope.selectedPeriod,
+						selectedFilters, relativePeriodDate);
 
 					// Add orgunits to orgunitsInfo. That info will be required later.
 					orgunitsInfo[dataViewOrgUnit.id] = dataViewOrgUnit;
@@ -158,7 +163,7 @@ appManagerMSF.controller('availabledataController', ["$scope", "$q", "$http", "$
 			}).$promise;
 
 			var childrenQuery = AnalyticsService.queryAvailableData(orgunitsInfo[orgunit.id].children, $scope.selectedPeriod,
-				selectedFilters);
+				selectedFilters, relativePeriodDate);
 
 			$q.all([childrenInfo, childrenQuery])
 				.then(function(data){
