@@ -31,7 +31,7 @@ appManagerMSF.factory("DemographicsService", ['$q', 'UserService', 'DataSetsUID'
     var populationByAgeId;
 
     var currentYear = new Date().getFullYear();
-    var startDate = (currentYear - 1) + "-01-01";
+    var startDate = (currentYear - 2) + "-01-01";
     var endDate = (currentYear + 1) + "-12-31";
 
     var userOrgunits;
