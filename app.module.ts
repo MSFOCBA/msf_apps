@@ -16,8 +16,28 @@
  
    You should have received a copy of the GNU General Public License
    along with Project Manager.  If not, see <http://www.gnu.org/licenses/>. */
+import {NgModule} from "@angular/core";
+import {BrowserModule} from "@angular/platform-browser";
+import {AppComponent} from "./app.component";
+import {AppRoutingModule} from "./app-routing.module";
 
+@NgModule({
+	imports: [
+		BrowserModule,
+		AppRoutingModule
+	],
+	declarations: [
+		AppComponent
+	],
+	bootstrap:    [
+		AppComponent
+	]
+})
 
+export class AppModule {
+}
+
+/**
 var appManagerMSF = angular.module("appManagerMSF", ['ngRoute','Dhis2Api','pascalprecht.translate','ui.bootstrap','d2Menu', 'angularFileUpload','angularTreeview','angularCSS']);
 
 appManagerMSF.config(function($routeProvider) {
@@ -112,3 +132,4 @@ appManagerMSF.config(function ($translateProvider, urlApi) {
 appManagerMSF.config(function (uibDatepickerConfig) {
 	uibDatepickerConfig.startingDay = 1;
 });
+*/

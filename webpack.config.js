@@ -5,7 +5,8 @@ var path = require('path');
 var colors = require('colors');
 
 const isDevBuild = process.argv[1].indexOf('webpack-dev-server') !== -1;
-const dhisConfigPath = process.env.DHIS2_HOME && `${process.env.DHIS2_HOME}/config`;
+//const dhisConfigPath = process.env.DHIS2_HOME && `${process.env.DHIS2_HOME}/config`;
+const dhisConfigPath = process.env.DHIS2_HOME
 let dhisConfig;
 
 try {
@@ -13,7 +14,7 @@ try {
     console.log('\nLoaded DHIS config:');
 } catch (e) {
     // Failed to load config file - use default config
-    console.warn(`\nWARNING! Failed to load DHIS config:`, e.message);
+//    console.warn(`\nWARNING! Failed to load DHIS config:`, e.message);
     console.info('Using default config');
     dhisConfig = {
         baseUrl: 'http://localhost:8989/dhis',
@@ -30,15 +31,22 @@ function log(req, res, opt) {
 const webpackConfig = {
     context: __dirname,
     contentBase: __dirname,
-    entry: './app.module.js',
+    entry: {
+        polyfills: './polyfills.ts',
+        app: './main.ts'
+    },
     devtool: 'source-map',
     output: {
         path: __dirname + '/build',
-        filename: 'app.js',
+        filename: '[name].js',
         publicPath: 'http://localhost:8081/'
     },
     module: {
         loaders: [
+            {
+                test: /\.ts$/,
+                loaders: ['babel', 'awesome-typescript-loader']
+            },
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
@@ -54,14 +62,15 @@ const webpackConfig = {
             {
                 test: /\.scss$/,
                 loader: 'style!css!sass',
-            },
+            }
         ],
     },
     resolve: {
         alias: {
             react: path.resolve('./node_modules/react'),
-            'material-ui': path.resolve('./node_modules/material-ui'),
+            'material-ui': path.resolve('./node_modules/material-ui')
         },
+        extensions: ["", ".ts", ".webpack.js", ".web.js", ".js", ".json" ]
     },
     devServer: {
         progress: true,
@@ -88,14 +97,7 @@ if (!isDevBuild) {
             DHIS_CONFIG: JSON.stringify({}),
         }),
         new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            //     compress: {
-            //         warnings: false,
-            //     },
-            comments: false,
-            beautify: true,
-        }),
+        new webpack.optimize.OccurenceOrderPlugin()
     ];
 } else {
     webpackConfig.plugins = [

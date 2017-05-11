@@ -1,24 +1,20 @@
 {
-	"version":"1.5-dev",
-	"name":"HMIS Management",
-	"description":"General management of HMIS: data and metadata import/export, password reset,...",
-	"launch_path":"index.html",
-	"icons":{"16":null,
-	"48":"img/icons/Logo_48.png",
-	"128":null
-	},
-	"developer":{
-	"url":"",
-	"name":"Helder Castrillon, Jose Garcia, Marko Garcia, Adrian Quintana",
-	"company":"EyeSeeTea Ltd. - Hisp Colombia",
-	"email":"josemp10@gmail.com, heldersoft@gmail.com"
-	},
-	"installs_allowed_from":null,
-	"default_locale":"en",
-	"activities": {
-	  "dhis": {
-	  	"href": "*",
-	  	"namespace": "HMIS_Management"
-	  }
-	}
+  "launch_path": "index.html",
+  "default_locale": "en",
+  "activities": {
+    "dhis": {
+      "href": "*"
+    }
+  },
+  "appType": "APP",
+  "name": "HMIS_Management",
+  "version": "1.0.0",
+  "description": "dsfsafd",
+  "developer": {
+    "name": "Helder Castrillon, Jose Garcia, Marko Garcia, Adrian Quintana, Victor Garcia"
+  },
+  "icons": {
+    "48": "icon.png"
+  },
+  "manifest_generated_at": "Thu May 11 2017 18:52:02 GMT+0200 (Hora de verano romance)"
 }
