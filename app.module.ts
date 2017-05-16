@@ -20,11 +20,31 @@ import {NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {AppComponent} from "./app.component";
 import {AppRoutingModule} from "./app-routing.module";
+import {DirectivesModule} from "./directives/directives.module"
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {Http, HttpModule} from "@angular/http";
+
+export function HttpLoaderFactory(http: Http) {
+	return new TranslateHttpLoader(http, '/languages/', '.json');
+}
 
 @NgModule({
 	imports: [
 		BrowserModule,
-		AppRoutingModule
+		DirectivesModule,
+		AppRoutingModule,
+		HttpModule,
+		TranslateModule.forRoot({
+			loader: {
+				provide: TranslateLoader,
+				useFactory: HttpLoaderFactory,
+				deps: [Http]
+			}
+		})
+	],
+	exports: [
+		TranslateModule
 	],
 	declarations: [
 		AppComponent
@@ -35,6 +55,7 @@ import {AppRoutingModule} from "./app-routing.module";
 })
 
 export class AppModule {
+	constructor() {}
 }
 
 /**

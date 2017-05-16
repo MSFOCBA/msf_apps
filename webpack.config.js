@@ -103,7 +103,7 @@ if (!isDevBuild) {
     webpackConfig.plugins = [
         new webpack.DefinePlugin({
             DHIS_CONFIG: JSON.stringify(dhisConfig)
-        }),
+        })
     ];
 }
 
