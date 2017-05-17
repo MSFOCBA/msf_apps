@@ -16,9 +16,27 @@
  
    You should have received a copy of the GNU General Public License
    along with Project Manager.  If not, see <http://www.gnu.org/licenses/>. */
+/**
+require('angular');
+require('bootstrap');
+require('angular-css');
+require('angular-resource');
+require('angular-route');
+require('angular-sanitize');
+require('angular-translate');
+require('angular-translate-loader-static-files');
+require('angular-ui-bootstrap');
+require('ng-file-upload');
+require('file-saver');
+require('jszip');
+ */
 
+require('./core/dhis2Api');
+require('./directives/directives.module');
+require('./directives/header/headerController');
+require('./directives/menu/menuController');
 
-var appManagerMSF = angular.module("appManagerMSF", ['ngRoute','Dhis2Api','pascalprecht.translate','ui.bootstrap','d2Menu', 'angularFileUpload','angularTreeview','angularCSS']);
+var appManagerMSF = angular.module("appManagerMSF", ['ngRoute','Dhis2Api', 'Directives', 'pascalprecht.translate','ui.bootstrap','d2Menu', 'ngFileUpload', 'angularTreeview', 'angularCSS']);
 
 appManagerMSF.config(function($routeProvider) {
  
@@ -107,8 +125,11 @@ appManagerMSF.config(function ($translateProvider, urlApi) {
       }).fail(function () {
     	  $translateProvider.determinePreferredLanguage();
 	  });
+
 });
 
 appManagerMSF.config(function (uibDatepickerConfig) {
 	uibDatepickerConfig.startingDay = 1;
 });
+
+module.exports = appManagerMSF;

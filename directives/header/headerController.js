@@ -16,11 +16,11 @@
  
    You should have received a copy of the GNU General Public License
    along with Project Manager.  If not, see <http://www.gnu.org/licenses/>. */
-
+var Dhis2Api = require('../../core/dhis2Api');
 
 Dhis2Api.directive('d2Header', function(){
-return{
-	restrict: 'E',
-	templateUrl: 'directives/header/headerView.html'
-}
-})
+	return{
+		restrict: 'E',
+		template: require('./headerView.html')
+	}
+});

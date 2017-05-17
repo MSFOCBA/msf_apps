@@ -6,6 +6,7 @@
   "dependencies": {
     "angular": "1.5.8",
     "angular-ui-bootstrap": "2.2.0",
+    "angular-file-upload": "2.3.0",
     "angular-css": "1.0.8",
     "angular-resource": "1.5.8",
     "angular-route": "1.5.8",
@@ -16,10 +17,15 @@
     "file-saver": "1.3.2",
     "jquery": "3.1.0",
     "jszip": "3.1.3",
-    "ng-file-upload": "2.2.2"
+    "ng-file-upload": "12.2.10"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "html-loader": "0.4.5",
+    "url-loader": "0.5.8",
+    "webpack": "2.5.1"
+  },
   "scripts": {
+    "start-webpack": "webpack --config webpack.config.js",
     "test": "mocha"
   },
   "repository": {

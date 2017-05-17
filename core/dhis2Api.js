@@ -16,7 +16,7 @@
  
    You should have received a copy of the GNU General Public License
    along with Project Manager.  If not, see <http://www.gnu.org/licenses/>. */
-	   
+
 var Dhis2Api = angular.module("Dhis2Api", ['ngResource']);
 
 // Specify the target api version of DHIS2
@@ -346,3 +346,5 @@ Dhis2Api.factory("Enrollments",['$resource', 'commonvariable', function ($resour
 Dhis2Api.factory("Programs",['$resource', 'commonvariable', function ($resource, commonvariable) {
 	return $resource( commonvariable.url + "programs/:uid" );
 }]);
+
+module.exports = Dhis2Api;
