@@ -38,6 +38,8 @@ require('./directives/directives.module');
 require('./features/features.module');
 require('./app.css');
 
+import { init } from 'd2/lib/d2'; 
+
 var appManagerMSF = angular.module("appManagerMSF", ['ngRoute','Dhis2Api','Directives', 'Features', 'pascalprecht.translate','ui.bootstrap','d2Menu', 'angularFileUpload','angularTreeview','angularCSS']);
 
 appManagerMSF.config(['$routeProvider', function($routeProvider) {
@@ -136,4 +138,8 @@ appManagerMSF.config(['$translateProvider', 'urlApi', function ($translateProvid
 
 appManagerMSF.config(['uibDatepickerConfig', function (uibDatepickerConfig) {
 	uibDatepickerConfig.startingDay = 1;
+}]);
+
+appManagerMSF.config(['urlApi', function (urlApi) {
+	init({baseUrl: urlApi}).then(d2 => console.log("Initialized d2"))
 }]);
