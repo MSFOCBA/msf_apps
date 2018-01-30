@@ -43,13 +43,13 @@ export class AnalyticsService {
      * @param filters - Filters = { "filterid": {"id": "optionid",...}, ... {"adsfjdsfjk": {"id": "sdflkasdfj",...}}
      * @returns {*|n} - Result of analytics endpoint
      */
-    queryAvailableData(orgunit, period, filters) {
-        const analyticsParameters: AnalyticsParameters = this.buildAnalyticsParameters(orgunit, period, filters);
+    queryAvailableData(orgunit, period, filters, relativePeridoDate) {
+        const analyticsParameters: AnalyticsParameters = this.buildAnalyticsParameters(orgunit, period, filters, relativePeridoDate);
 
         return this.AnalyticsEngine.get(analyticsParameters).$promise;
     };
 
-    private buildAnalyticsParameters(orgunit, period, filters): AnalyticsParameters {
+    private buildAnalyticsParameters(orgunit, period, filters, relativePeriodDate): AnalyticsParameters {
 
         var orgunits = "";
         if (orgunit instanceof Array) {
@@ -68,7 +68,10 @@ export class AnalyticsService {
             hierarchyMeta: "TRUE",
             displayProperty: "NAME"
         };
-
+        if (relativePeriodDate != undefined) {
+                 parameters.relativePeriodDate = relativePeriodDate;
+                   };
+                        
         if (filters !== null) {
             var filterArray = [];
             angular.forEach(filters, (option, filterid) => {
@@ -204,6 +207,7 @@ class AnalyticsParameters {
         public aggregationType: string,
         public hierarchyMeta: string,
         public displayProperty: string,
-        public filter?: any
+        public filter?: any,
+        public relativePeriodDate?: any
     ) { }
 }

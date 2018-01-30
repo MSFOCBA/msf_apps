@@ -37,7 +37,7 @@ export class AvailableData {
 	}
 	isOnline = this.commonvariable.isOnline;
 	availableDataStatus = ProgressStatus.initialWithoutProgress;
-
+	relativePeriodDate = "2016-06-01";
 	availablePeriods = [
 		{
 			"name": "LAST_WEEKS",
@@ -199,14 +199,14 @@ export class AvailableData {
 		this.tableDisplayed = false;
 		this.availableDataStatus = ProgressStatus.initialWithoutProgress;
 
-		this.UserService.getCurrentUser().then(me => {
+			this.UserService.getCurrentUser().then(me => {
 			var dataViewOrgUnits = me.dataViewOrganisationUnits;
 
 			var k = dataViewOrgUnits.length;
 			var currentOu = 0;
 			angular.forEach(dataViewOrgUnits, dataViewOrgUnit => {
-				var parentPromise = this.AnalyticsService.queryAvailableData(dataViewOrgUnit, this.selectedPeriod, this.selectedFilters);
-				var childrenPromise = this.AnalyticsService.queryAvailableData(dataViewOrgUnit.children, this.selectedPeriod, this.selectedFilters);
+				var parentPromise = this.AnalyticsService.queryAvailableData(dataViewOrgUnit, this.selectedPeriod, this.selectedFilters, this.relativePeriodDate);
+				var childrenPromise = this.AnalyticsService.queryAvailableData(dataViewOrgUnit.children, this.selectedPeriod, this.selectedFilters, this.relativePeriodDate);
 
 				// Add orgunits to orgunitsInfo. That info will be required later.
 				this.orgunitsInfo[dataViewOrgUnit.id] = dataViewOrgUnit;
@@ -316,7 +316,7 @@ for(var i=0;i<numOfDays;i++)
 		}).$promise;
 
 		var childrenQuery = this.AnalyticsService.queryAvailableData(this.orgunitsInfo[orgunit.id].children, this.selectedPeriod,
-			this.selectedFilters);
+			this.selectedFilters, this.relativePeriodDate);
 
 		this.$q.all([childrenInfo, childrenQuery])
 			.then(data => {
