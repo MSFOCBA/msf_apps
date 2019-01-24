@@ -20,10 +20,10 @@
 var Dhis2Api = angular.module("Dhis2Api", ['ngResource']);
 
 // Specify the target api version of DHIS2
-var apiVersion = 28;
+var apiVersion = 29;
 
 var urlBase = window.location.href.split('api/apps/')[0];
-var urlApi = urlBase + 'api/' + apiVersion + "/";
+var urlApi = urlBase + 'api/'; /* + apiVersion + "/";*/
 
 //Auxiliary variable to parse the url
 var urlAuxLink = document.createElement('a');
@@ -39,7 +39,8 @@ window.dhis2 = window.dhis2 || {};
 dhis2.settings = dhis2.settings || {};
 dhis2.settings.baseUrl = auxBaseUrl;
 
-var isOnline = urlBase.indexOf("//hmisocba.msf.es") >= 0;
+var isOnline = urlBase.indexOf("msf.es") >= 0;
+//isOnline=true;
 
 // Get and save DHIS version
 var version = "";
@@ -117,7 +118,7 @@ Dhis2Api.factory("Analytics",['$resource','commonvariable', function ($resource,
 }]);
 
 Dhis2Api.factory("DataMart",['$resource','commonvariable', function ($resource,commonvariable) {
-	return $resource( commonvariable.url + "system/tasks/ANALYTICSTABLE_UPDATE",
+	return $resource( commonvariable.url + "system/tasks/ANALYTICS_TABLE",
    {lastId:'@lastId'},
   { get: { method: "GET"} });
 
@@ -358,12 +359,32 @@ Dhis2Api.factory("TrackedEntityInstances",['$resource', 'commonvariable', functi
 }]);
 
 Dhis2Api.factory("Enrollments",['$resource', 'commonvariable', function ($resource, commonvariable) {
-	return $resource( commonvariable.url + "enrollments/:uid" );
+	return $resource( commonvariable.url + "enrollments/:uid", {}, {
+		get: {
+			method: 'GET',
+			params: {skipPaging: true}
+		}
+	});
 }]);
 
 Dhis2Api.factory("Programs",['$resource', 'commonvariable', function ($resource, commonvariable) {
-	return $resource( commonvariable.url + "programs/:uid" );
+	return $resource( commonvariable.url + "programs/:uid");
 }]);
+
+Dhis2Api.factory("JobExecute",['$resource', 'commonvariable', function ($resource, commonvariable) {
+	return $resource( commonvariable.url + "jobConfigurations/:uid/execute" );
+}]);
+
+
+
+Dhis2Api.factory("JobConfigurations",['$resource', 'commonvariable', function ($resource, commonvariable) {
+	return $resource( commonvariable.url + "jobConfigurations/:name" );
+}]);
+
+Dhis2Api.factory("Jobs",['$resource', 'commonvariable', function ($resource, commonvariable) {
+	return $resource( commonvariable.url + "jobConfigurations/:uid" );
+}]);
+
 
 Dhis2Api.factory("Ping", ['$resource', 'commonvariable', function ($resource, commonvariable) {
 	return $resource( commonvariable.url + "system/ping",

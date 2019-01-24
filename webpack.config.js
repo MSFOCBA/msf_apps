@@ -7,6 +7,7 @@ module.exports = {
     entry: './app.js',
     output: {
         filename: 'bundle.js',
+        //filename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [

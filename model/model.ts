@@ -31,6 +31,20 @@ export class OrgunitExtended extends Orgunit {
     }
 }
 
+export class OrgunitStatus extends OrgunitExtended {
+    constructor(
+        public id: string,
+        public name: string,
+        public level: number,
+        public openingDate: Date,
+        public closedDate: Date,
+        public attributeValues: AttributeValue[],
+        public children: OrgunitStatus[]
+    ){
+        super(id, name, level, children);
+    }
+}
+
 export class OrgunitGroupSet {
     constructor(
         public id: string,
@@ -47,14 +61,32 @@ export class Program {
     ){}
 }
 
+export class Job {
+    constructor(
+        public id: string,
+        public name: string
+        
+    ){}
+}
+
+
 export class TrackerDataExportLog {
     constructor(
         public filename: string,
         public start: Date,
-        public end: Date
+        public end: Date,
+        public serverName:string,
+        public projectName: string
     ){}
 }
-
+export class AggregatedDataExportLog {
+    constructor(
+        public filename: string,
+        public lastUpdated: Date,
+        public end: Date
+        
+    ){}
+}
 export class ProgressStatus {
     constructor(
         public visible: boolean,
@@ -138,7 +170,7 @@ export class CurrentUser {
     constructor(
         public id: string,
         public name: string,
-        public userCredentials: {usernameid: string, userRoles: IdName[]},
+        public userCredentials: {username:string,usernameid: string, userRoles: IdName[]},
         public userGroups: IdName[],
         public organisationUnits: OrgunitExtended[],
         public dataViewOrganisationUnits: {id: string, level: number, children:{id: string, level: number, children: string[]}[]}[]
@@ -165,16 +197,16 @@ export class MessageConversation {
 
 export class AttributeValue {
     constructor(
-        value: string,
-        attribute: {id: string}
+        public value: string,
+        public attribute: {id: string}
     ){}
 }
 
 export class ServiceWithPrograms {
     constructor(
-        name: string,
-        code: string,
-        programs: string            //Code
+        public name: string,
+        public code: string,
+        public programs: string            //Code
     ){}
 }
 
